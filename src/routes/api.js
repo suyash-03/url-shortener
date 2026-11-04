@@ -4,6 +4,14 @@ import { stmts } from "../db.js";
 
 const router = Router();
 
+/** Derive base URL from the incoming request (works behind proxies like Render) */
+function getBaseUrl(req) {
+  if (process.env.BASE_URL) return process.env.BASE_URL;
+  const proto = req.headers["x-forwarded-proto"] || req.protocol;
+  const host = req.headers["x-forwarded-host"] || req.get("host");
+  return `${proto}://${host}`;
+}
+
 /**
  * POST /api/shorten
  * Body: { "url": "https://example.com/very/long/path" }
@@ -32,8 +40,7 @@ router.post("/shorten", (req, res) => {
     if (err.code === "SQLITE_CONSTRAINT_UNIQUE") {
       const retry = nanoid(7);
       stmts.insert.run(retry, url);
-      const baseUrl =
-        process.env.BASE_URL || `http://localhost:${process.env.PORT || 3000}`;
+      const baseUrl = getBaseUrl(req);
       return res.status(201).json({
         shortCode: retry,
         shortUrl: `${baseUrl}/${retry}`,
@@ -43,8 +50,7 @@ router.post("/shorten", (req, res) => {
     throw err;
   }
 
-  const baseUrl =
-    process.env.BASE_URL || `http://localhost:${process.env.PORT || 3000}`;
+  const baseUrl = getBaseUrl(req);
 
   res.status(201).json({
     shortCode,

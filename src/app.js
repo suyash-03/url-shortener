@@ -8,6 +8,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
+// Trust reverse proxy headers (Render, Railway, etc.)
+app.set("trust proxy", true);
+
 // --- Middleware ---
 app.use(express.json());
 
