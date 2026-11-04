@@ -3,55 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>URL Shortener</title>
+  <title>Snip — URL Shortener</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>🔗 URL Shortener</h1>
-      <p class="subtitle">Paste a long URL and get a short one</p>
+  <div class="noise"></div>
+
+  <main class="container">
+    <!-- Hero -->
+    <header class="hero">
+      <div class="logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="8" fill="#7c3aed"/>
+          <path d="M8 14h4l2-4 4 8 2-4h4" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>snip</span>
+      </div>
+      <h1>Shorten any link.<br/>Track every click.</h1>
+      <p class="tagline">Paste a URL. Get a short link. See who clicks it.</p>
     </header>
 
-    <form id="shorten-form">
-      <div class="input-group">
+    <!-- Input -->
+    <form id="shorten-form" class="input-wrapper">
+      <div class="input-glow"></div>
+      <div class="input-bar">
         <input
           type="url"
           id="url-input"
-          placeholder="https://example.com/very/long/url..."
+          placeholder="https://example.com/really/long/url…"
           required
           autocomplete="off"
+          spellcheck="false"
         />
-        <button type="submit" id="shorten-btn">Shorten</button>
+        <button type="submit" id="shorten-btn">
+          <span class="btn-label">Shorten</span>
+          <span class="btn-loading" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="2" stroke-dasharray="28" stroke-dashoffset="8" stroke-linecap="round">
+                <animateTransform attributeName="transform" type="rotate" from="0 8 8" to="360 8 8" dur="0.75s" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+          </span>
+        </button>
       </div>
     </form>
 
-    <div id="result" class="result hidden">
-      <p>Your short URL:</p>
-      <div class="short-url-row">
-        <a id="short-url" href="#" target="_blank" rel="noopener"></a>
-        <button id="copy-btn" class="copy-btn" title="Copy to clipboard">📋</button>
+    <!-- Result -->
+    <div id="result" class="result-card" hidden>
+      <div class="result-header">
+        <span class="result-badge">Created</span>
       </div>
+      <div class="result-body">
+        <code id="short-url-display" class="short-url-code"></code>
+        <button id="copy-btn" class="copy-btn" title="Copy link">
+          <svg id="copy-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="5" width="9" height="9" rx="1.5"/>
+            <path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/>
+          </svg>
+          <svg id="check-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+            <path d="M3 8.5l3.5 3.5 6.5-7"/>
+          </svg>
+        </button>
+      </div>
+      <p class="result-original" id="result-original"></p>
     </div>
 
-    <section class="urls-section">
-      <h2>Recent URLs</h2>
-      <table id="urls-table">
-        <thead>
-          <tr>
-            <th>Short Code</th>
-            <th>Original URL</th>
-            <th>Clicks</th>
-            <th>Created</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="urls-body">
-        </tbody>
-      </table>
-      <p id="empty-state" class="empty-state">No URLs shortened yet.</p>
+    <!-- Links -->
+    <section class="links-section">
+      <div class="links-header">
+        <h2>Your links</h2>
+        <span class="links-count" id="links-count"></span>
+      </div>
+
+      <div id="links-list" class="links-list">
+        <!-- Populated by JS -->
+      </div>
+
+      <div id="empty-state" class="empty-state">
+        <div class="empty-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 19l-3 3a4 4 0 0 1-5.66-5.66l3-3"/>
+            <path d="M19 13l3-3a4 4 0 0 1 5.66 5.66l-3 3"/>
+            <path d="M12 20l8-8"/>
+          </svg>
+        </div>
+        <p>No links yet</p>
+        <span>Shorten your first URL above</span>
+      </div>
     </section>
-  </div>
+  </main>
 
   <script src="/script.js"></script>
 </body>
