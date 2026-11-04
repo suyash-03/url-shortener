@@ -1,0 +1,14 @@
+{
+  "name": "url-shortner",
+  "version": "1.0.0",
+  "description": "A minimal URL shortener service with analytics",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": ["url-shortener", "express", "sqlite"],
+  "license": "MIT"
+}
