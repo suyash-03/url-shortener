@@ -102,13 +102,25 @@ Runs 11 tests covering creation, validation, redirect, click tracking, and delet
 
 > **Note:** This app requires a Node.js server (Express + SQLite). It **cannot** be deployed on static hosts like GitHub Pages.
 
-### Recommended platforms
+### Deploy to Render (free)
 
-| Platform | Deploy |
-|----------|--------|
-| **[Railway](https://railway.app)** | One-click from GitHub |
-| **[Render](https://render.com)** | Free tier available |
-| **[Fly.io](https://fly.io)** | Edge deployment with persistent volumes |
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/suyash-03/url-shortener)
+
+1. Click the button above (or go to [render.com/deploy](https://render.com/deploy))
+2. Connect your GitHub account and select this repo
+3. Render auto-detects the `render.yaml` blueprint
+4. Set `BASE_URL` to your Render URL (e.g. `https://snip-url-shortener.onrender.com`)
+5. Click **Deploy**
+
+> [!NOTE]
+> Render's free tier uses **ephemeral storage** — the SQLite database resets on each redeploy or after ~15 min of inactivity. This is fine for a demo. For persistent data, upgrade to a paid plan with a [persistent disk](https://docs.render.com/disks), or swap SQLite for a managed database like [Neon](https://neon.tech) (free Postgres).
+
+### Other platforms
+
+| Platform | Notes |
+|----------|-------|
+| **[Railway](https://railway.app)** | One-click from GitHub, persistent volumes |
+| **[Fly.io](https://fly.io)** | Edge deployment with persistent disk for SQLite |
 | **[Vercel](https://vercel.com)** | Serverless (would need DB swap to Turso/Neon) |
 
 ## License
